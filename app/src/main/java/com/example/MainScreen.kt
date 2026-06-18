@@ -705,6 +705,9 @@ fun ScheduleScreen(viewModel: LoanViewModel, onBack: () -> Unit) {
                     IconButton(onClick = { summary?.let { exportScheduleToCsv(context, it) } }) {
                         Icon(Icons.Default.FileDownload, contentDescription = "Export CSV")
                     }
+                    IconButton(onClick = { summary?.let { exportScheduleToPdf(context, it, input) } }) {
+                        Icon(androidx.compose.material.icons.Icons.Default.PictureAsPdf, contentDescription = "Export PDF")
+                    }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
