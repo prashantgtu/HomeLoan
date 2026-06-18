@@ -45,6 +45,7 @@ import java.util.Calendar
 import android.text.format.DateFormat
 import com.example.data.AppDatabase
 import com.example.data.LoanRepository
+import com.example.ui.PinLoginScreen
 
 fun formatMonthYear(startDateMs: Long, monthOffset: Int): String {
     val cal = Calendar.getInstance().apply { timeInMillis = startDateMs }
@@ -97,7 +98,16 @@ fun AppNavigation() {
     val repository = remember { LoanRepository(AppDatabase.getDatabase(context).loanDao()) }
     val viewModel: LoanViewModel = viewModel(factory = LoanViewModelFactory(repository))
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "home") {
+    NavHost(navController = navController, startDestination = "pin_lock") {
+        composable("pin_lock") {
+            PinLoginScreen(
+                onLoginSuccess = {
+                    navController.navigate("home") {
+                        popUpTo("pin_lock") { inclusive = true }
+                    }
+                }
+            )
+        }
         composable("home") {
             HomeScreen(viewModel, { navController.navigate("schedule") })
         }
