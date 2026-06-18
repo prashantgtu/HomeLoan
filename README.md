@@ -82,6 +82,4 @@ Click **Run** in Android Studio, or from a terminal:
 
 Runs unit tests, including Robolectric-based Compose screenshot tests via Roborazzi.
 
-## License
 
-Not yet specified — add a `LICENSE` file (MIT, Apache 2.0, etc.) if you intend to make this public.
