@@ -1,22 +1,83 @@
-# Home Loan Calculator (Android)
+# Home Loan EMI Calculator
 
-This is a comprehensive Home Loan planner and EMI calculator designed specifically for Android. It simulates bank-level amortization schedules, incorporating prepayments, interest rate revisions, and repayment strategies.
+A native Android app for home loan planning, built with Kotlin and Jetpack Compose. It models full bank-style amortization schedules and lets you experiment with prepayments, interest rate changes, and repayment strategies before committing to a loan.
 
-## Features Preserved and Ported
-- **Home loan / EMI calculation**: Calculate standard monthly payments based on principal, rate, and tenure.
-- **Bank-grade amortization logic**: Accurately computes month-by-month principal and interest.
-- **Interest rate change simulation**: Revise interest rates at given months and recalculate the remainder.
-- **Extra / lump-sum payment simulation**: Supports both recurring monthly extra payments and lump-sum events.
-- **Comparison of strategies**: Toggle between "reduce EMI" or "reduce tenure" when making prepayments or taking rate changes.
-- **Full amortization schedule**: A scrollable data table breaking down all payments, balances, and savings.
-- **Balance Chart**: A visual graphical representation of the loan balance over time.
-- **Export to CSV**: Download the schedule as a CSV file to Android's Downloads folder to view in Excel.
+## Try the App (Download APK)
 
-## Architectural Notes
-- The logic is decoupled into a pure Kotlin object (`LoanMath.kt`), fulfilling the same role as a pure Dart service, making it highly testable and framework-independent.
-- Implemented entirely in **Kotlin** and **Jetpack Compose**, as this is a native Android cloud build environment.
-- The UI mimics clean banking-style material cards with expandable/scrollable data sections.
+You can download the pre-built debug APK directly from this repository:
+- [HomeLoan.apk](HomeLoan.apk) (Download and install on your Android device/emulator)
 
-## How to Build and Run
-- Built with Gradle (`gradle assembleDebug`) in this AI Studio workspace.
-- The compiled APK is available and automatically run on the attached Android emulator view.
+## Features
+
+- EMI calculation from principal, interest rate, and tenure
+- Month-by-month amortization schedule with a principal-vs-interest breakdown
+- Mid-tenure interest rate revisions with automatic recalculation of the remainder
+- One-off lump-sum and recurring extra payments
+- Choice of "reduce EMI" or "reduce tenure" strategy whenever you prepay or revise the rate
+- Scrollable amortization table showing running balances and interest saved
+- Loan balance chart over time
+- Export the full schedule to CSV, saved to the device's Downloads folder
+
+## Tech Stack
+
+- Kotlin + Jetpack Compose (Material 3) for the UI
+- Kotlin Coroutines for asynchronous work
+- Room for local persistence
+- Retrofit, Moshi, and OkHttp for networking
+- Navigation Compose for in-app navigation
+- Robolectric + Roborazzi for unit and Compose screenshot tests
+
+## Project Structure
+
+- `app/` — the application module: UI screens, ViewModels, Room database, and networking code
+- `app/src/main/java/.../LoanMath.kt` — a pure Kotlin amortization/EMI engine with no Android framework dependencies, so it's fully unit-testable in isolation
+
+## Getting Started
+
+### Prerequisites
+
+- Android Studio Otter 3 Feature Drop (2025.2.3) or newer — required for AGP 9.1.x
+- JDK 17
+- An Android device or emulator running API 24 or higher
+
+### Setup
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/prashantgtu/HomeLoan.git
+   ```
+2. Open the project folder in Android Studio and let Gradle sync.
+3. If you're using any API-key-gated features, copy `app/.env.example` to `app/.env` and fill in your own values. `.env` is gitignored and never committed.
+
+### Run
+
+Click **Run** in Android Studio, or from a terminal:
+
+```bash
+./gradlew installDebug
+```
+
+### Build an APK
+
+- **Debug APK** — Build → Build APK(s) in Android Studio, or run:
+  ```bash
+  ./gradlew assembleDebug
+  ```
+  The output will be generated at `app/build/outputs/apk/debug/`.
+
+- **Release APK** — requires a signing keystore. Set the `KEYSTORE_PATH`, `STORE_PASSWORD`, and `KEY_PASSWORD` environment variables (or place an upload keystore named `my-upload-key.jks` at the project root), then run:
+  ```bash
+  ./gradlew assembleRelease
+  ```
+
+## Testing
+
+```bash
+./gradlew test
+```
+
+Runs unit tests, including Robolectric-based Compose screenshot tests via Roborazzi.
+
+## License
+
+Not yet specified — add a `LICENSE` file (MIT, Apache 2.0, etc.) if you intend to make this public.
