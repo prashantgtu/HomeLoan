@@ -46,6 +46,7 @@ import android.text.format.DateFormat
 import com.example.data.AppDatabase
 import com.example.data.LoanRepository
 import com.example.ui.PinLoginScreen
+import com.example.data.ThemeManager
 
 fun formatMonthYear(startDateMs: Long, monthOffset: Int): String {
     val cal = Calendar.getInstance().apply { timeInMillis = startDateMs }
@@ -93,7 +94,7 @@ fun StartDateSelector(startDateMs: Long, onDateSelected: (Long) -> Unit) {
 }
 
 @Composable
-fun AppNavigation() {
+fun AppNavigation(themeManager: ThemeManager) {
     val context = LocalContext.current
     val repository = remember { LoanRepository(AppDatabase.getDatabase(context).loanDao()) }
     val viewModel: LoanViewModel = viewModel(factory = LoanViewModelFactory(repository))
@@ -109,7 +110,7 @@ fun AppNavigation() {
             )
         }
         composable("home") {
-            HomeScreen(viewModel, { navController.navigate("schedule") })
+            HomeScreen(viewModel, themeManager, { navController.navigate("schedule") })
         }
         composable("schedule") {
             ScheduleScreen(viewModel, { navController.popBackStack() })
@@ -119,7 +120,7 @@ fun AppNavigation() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(viewModel: LoanViewModel, onNavigateSchedule: () -> Unit) {
+fun HomeScreen(viewModel: LoanViewModel, themeManager: ThemeManager, onNavigateSchedule: () -> Unit) {
     val input by viewModel.inputFlow.collectAsState()
     val summary by viewModel.summary.collectAsState()
     val prepayments by viewModel.prepayments.collectAsState()
@@ -142,6 +143,18 @@ fun HomeScreen(viewModel: LoanViewModel, onNavigateSchedule: () -> Unit) {
                     }
                 },
                 actions = {
+                    val themePref by themeManager.themeFlow.collectAsState()
+                    val nextTheme = when (themePref) {
+                        "light" -> "dark"
+                        "dark" -> "light"
+                        else -> "light"
+                    }
+                    IconButton(onClick = { themeManager.setThemePreference(nextTheme) }) {
+                        Icon(
+                            imageVector = if (themePref == "dark") androidx.compose.material.icons.Icons.Default.LightMode else androidx.compose.material.icons.Icons.Default.DarkMode,
+                            contentDescription = "Toggle Theme"
+                        )
+                    }
                     IconButton(onClick = { viewModel.resetToDefault() }) {
                         Icon(androidx.compose.material.icons.Icons.Default.Add, contentDescription = "New loan scenario")
                     }

@@ -1,9 +1,10 @@
-# Home Loan EMI Calculator (v2.0)
+# Home Loan EMI Calculator (v2.1)
 
 A native Android app for home loan planning, built with Kotlin and Jetpack Compose. It models full bank-style amortization schedules and lets you experiment with prepayments, interest rate changes, and repayment strategies before committing to a loan.
 
-## New in Version 2.0
-- **Offline PIN Login**: Secure your financial planning scenarios offline with a 4-digit PIN setup and authentication screen.
+## New in Version 2.1
+- **Day/Night Theme Toggle**: Switch dynamically between light (day) and dark (night) theme styles from the top bar.
+- **Offline PIN Login**: Secure your financial planning scenarios offline with a 4-digit PIN setup and authentication screen (introduced in v2.0).
 
 ## Try the App (Download APK)
 
@@ -12,6 +13,7 @@ You can download the pre-built debug APK directly from this repository:
 
 ## Features
 
+- **Dynamic Theme Mode**: Day/Night style toggle.
 - **Offline 4-Digit PIN Security**: Setup and login with a secure 4-digit PIN.
 - EMI calculation from principal, interest rate, and tenure
 - Month-by-month amortization schedule with a principal-vs-interest breakdown
