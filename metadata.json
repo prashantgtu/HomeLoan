@@ -1,0 +1,6 @@
+{
+  "name": "Home Loan",
+  "description": "Bank-grade home loan calculator for EMI, amortization, and prepayments.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
